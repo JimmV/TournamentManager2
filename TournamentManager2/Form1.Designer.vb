@@ -40,14 +40,16 @@ Partial Class Form1
         DeleteButton = New Button()
         AddButton = New Button()
         MessageBox = New TextBox()
+        BracketButton = New Button()
+        Label1 = New System.Windows.Forms.Label()
         SuspendLayout()
         ' 
         ' ListBox1
         ' 
         ListBox1.FormattingEnabled = True
-        ListBox1.Location = New Point(23, 23)
+        ListBox1.Location = New Point(23, 43)
         ListBox1.Name = "ListBox1"
-        ListBox1.Size = New Size(323, 404)
+        ListBox1.Size = New Size(323, 384)
         ListBox1.TabIndex = 0
         ' 
         ' NameTitle
@@ -143,17 +145,37 @@ Partial Class Form1
         ' 
         ' MessageBox
         ' 
-        MessageBox.Location = New Point(386, 241)
+        MessageBox.Location = New Point(386, 260)
         MessageBox.Name = "MessageBox"
         MessageBox.ReadOnly = True
         MessageBox.Size = New Size(382, 27)
         MessageBox.TabIndex = 13
+        ' 
+        ' BracketButton
+        ' 
+        BracketButton.Location = New Point(504, 368)
+        BracketButton.Name = "BracketButton"
+        BracketButton.Size = New Size(94, 29)
+        BracketButton.TabIndex = 14
+        BracketButton.Text = "Bracket"
+        BracketButton.UseVisualStyleBackColor = True
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Location = New Point(27, 14)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(86, 20)
+        Label1.TabIndex = 15
+        Label1.Text = "Gamer Tags"
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Label1)
+        Controls.Add(BracketButton)
         Controls.Add(MessageBox)
         Controls.Add(AddButton)
         Controls.Add(DeleteButton)
@@ -186,8 +208,10 @@ Partial Class Form1
     Friend WithEvents UpdateButton As Button
     Friend WithEvents DeleteButton As Button
     Friend WithEvents AddButton As Button
+    Friend WithEvents MessageBox As TextBox
+    Friend WithEvents BracketButton As Button
 
-    Dim connectionString = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
+    Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
     Public Sub New()
 
@@ -199,7 +223,6 @@ Partial Class Form1
 
     Private Sub populateLB()
         ListBox1.Items.Clear()
-        Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
         Dim connection As New SqlConnection(connectionString)
         connection.Open()
         Dim query As New SqlCommand("SELECT GamerTag from PlayerDB ORDER BY GamerTag", connection)
@@ -219,8 +242,6 @@ Partial Class Form1
     Private Sub ListBox1_Click(sender As Object, e As EventArgs) Handles ListBox1.MouseClick
         Dim selectedItem = ListBox1.SelectedItem
         NameBox.Text = selectedItem
-
-        Dim connectionString = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
         Dim connection As New SqlConnection(connectionString)
         connection.Open()
         Dim query As String = "SELECT * from PlayerDB WHERE GamerTag = " + selectedItem
@@ -268,12 +289,11 @@ Partial Class Form1
     End Sub
 
     Private Sub AddButton_Click(sender As Object, e As EventArgs) Handles AddButton.Click
-        Dim connectionString = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
         Dim connection As New SqlConnection(connectionString)
         connection.Open()
-        Dim query As String = "INSERT INTO PlayerDB VALUES ('" & NameBox.Text & "', '" & GamerBox.Text & "', " & CInt(WinsBox.Text) & ", " & CInt(LossesBox.Text) & ")"
-        Dim command As New SqlCommand(query, connection)
         Try
+            Dim query As String = "INSERT INTO PlayerDB VALUES ('" & NameBox.Text & "', '" & GamerBox.Text & "', " & CInt(WinsBox.Text) & ", " & CInt(LossesBox.Text) & ")"
+            Dim command As New SqlCommand(query, connection)
             command.ExecuteNonQuery()
         Catch ex As Exception
             MessageBox.Text = ex.Message
@@ -282,6 +302,62 @@ Partial Class Form1
         populateLB()
     End Sub
 
-    Friend WithEvents MessageBox As TextBox
+    Private Sub BracketButton_Click(sender As Object, e As EventArgs) Handles BracketButton.Click
+        Dim bf As New BracketForm
+        bf.Show()
+    End Sub
 
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+
+End Class
+
+Class Player
+    Private playername As String
+    Private gamerTag As String
+    Private wins As Integer
+    Private losses As Integer
+
+    Public Property GetPlayername() As String
+        Get
+            ' Gets the property value.
+            Return playername
+        End Get
+        Set(ByVal Value As String)
+            ' Sets the property value.
+            playername = Value
+        End Set
+    End Property
+
+    Public Property GetGamerTag() As String
+        Get
+            ' Gets the property value.
+            Return gamerTag
+        End Get
+        Set(ByVal Value As String)
+            ' Sets the property value.
+            gamerTag = Value
+        End Set
+    End Property
+
+    Public Property GetWins() As String
+        Get
+            ' Gets the property value.
+            Return wins
+        End Get
+        Set(ByVal Value As String)
+            ' Sets the property value.
+            wins = Value
+        End Set
+    End Property
+
+    Public Property GetLosses() As String
+        Get
+            ' Gets the property value.
+            Return losses
+        End Get
+        Set(ByVal Value As String)
+            ' Sets the property value.
+            losses = Value
+        End Set
+    End Property
 End Class
