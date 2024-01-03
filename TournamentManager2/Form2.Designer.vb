@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Data.SqlClient
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class BracketForm
     Inherits System.Windows.Forms.Form
 
@@ -200,5 +202,36 @@ Partial Class BracketForm
     Friend WithEvents ComboBox14 As ComboBox
     Friend WithEvents ComboBox15 As ComboBox
 
+    Dim dt As New DataTable
+    Dim availablePlayers As New List(Of String)
+    Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+        ' Add any initialization after the InitializeComponent() call.
+        populateTable()
+        ComboBox8.DataSource = availablePlayers
+        ComboBox9.DataSource = availablePlayers
+    End Sub
+
+    Private Sub populateTable()
+        Dim connection As New SqlConnection(connectionString)
+        connection.Open()
+        Dim query As New SqlCommand("SELECT GamerTag from PlayerDB ORDER BY GamerTag", connection)
+        Dim reader As SqlDataReader = query.ExecuteReader()
+        dt.Load(reader)
+        connection.Close()
+        For Each row As DataRow In dt.Rows
+            availablePlayers.Add(row.Item("GamerTag"))
+        Next
+    End Sub
+
+    Private Sub ComboBox8_Click(sender As Object, e As EventArgs) Handles ComboBox8.Click
+        availablePlayers.Remove(ComboBox8.SelectedItem)
+        ComboBox9.DataSource = Nothing
+        ComboBox9.DataSource = availablePlayers
+
+    End Sub
 End Class
