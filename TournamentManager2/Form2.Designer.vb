@@ -202,8 +202,11 @@ Partial Class BracketForm
     Friend WithEvents ComboBox14 As ComboBox
     Friend WithEvents ComboBox15 As ComboBox
 
+    Dim cb As New List(Of ComboBox)
+
     Dim dt As New DataTable
     Dim availablePlayers As New List(Of String)
+    Dim takenPlayers(8) As String
     Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
     Public Sub New()
@@ -212,8 +215,23 @@ Partial Class BracketForm
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         populateTable()
-        ComboBox8.DataSource = availablePlayers
-        ComboBox9.DataSource = availablePlayers
+        For ind As Integer = 1 To 8
+            takenPlayers(ind) = "Select"
+        Next
+        cb.Add(ComboBox8)
+        cb.Add(ComboBox9)
+        cb.Add(ComboBox10)
+        cb.Add(ComboBox11)
+        cb.Add(ComboBox12)
+        cb.Add(ComboBox13)
+        cb.Add(ComboBox14)
+        cb.Add(ComboBox15)
+
+        For Each combo As ComboBox In cb
+            combo.DataSource = availablePlayers
+            AddHandler combo.SelectionChangeCommitted, AddressOf ComboBox_SIC
+        Next
+
     End Sub
 
     Private Sub populateTable()
@@ -223,15 +241,27 @@ Partial Class BracketForm
         Dim reader As SqlDataReader = query.ExecuteReader()
         dt.Load(reader)
         connection.Close()
+        availablePlayers.Add("Select")
         For Each row As DataRow In dt.Rows
             availablePlayers.Add(row.Item("GamerTag"))
         Next
     End Sub
 
-    Private Sub ComboBox8_Click(sender As Object, e As EventArgs) Handles ComboBox8.Click
-        availablePlayers.Remove(ComboBox8.SelectedItem)
+    Private Sub ComboBox_SIC(sender As Object, e As EventArgs)
+        If sender.SelectedItem = "Select" Then
+            If takenPlayers(1) <> "Select" Then
+                availablePlayers.Add(takenPlayers(1))
+            End If
+            takenPlayers(1) = "Select"
+        Else
+            availablePlayers.Remove(sender.SelectedItem)
+            If takenPlayers(1) <> "Select" Then
+                availablePlayers.Add(takenPlayers(1))
+            End If
+            takenPlayers(1) = sender.SelectedItem
+        End If
+
         ComboBox9.DataSource = Nothing
         ComboBox9.DataSource = availablePlayers
-
     End Sub
 End Class
