@@ -206,7 +206,8 @@ Partial Class BracketForm
 
     Dim dt As New DataTable
     Dim availablePlayers As New List(Of String)
-    Dim takenPlayers(8) As String
+    Dim takenPlayersList As New List(Of String)
+    Dim takenPlayers(7) As String
     Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
     Public Sub New()
@@ -215,9 +216,10 @@ Partial Class BracketForm
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         populateTable()
-        For ind As Integer = 1 To 8
-            takenPlayers(ind) = "Select"
+        For ind As Integer = 0 To 7
+            takenPlayers(ind) = "(None Selected)"
         Next
+
         cb.Add(ComboBox8)
         cb.Add(ComboBox9)
         cb.Add(ComboBox10)
@@ -227,9 +229,15 @@ Partial Class BracketForm
         cb.Add(ComboBox14)
         cb.Add(ComboBox15)
 
+        Dim index As Integer
+        index = 0
         For Each combo As ComboBox In cb
-            combo.DataSource = availablePlayers
+            'combo.DataSource = availablePlayers
             AddHandler combo.SelectionChangeCommitted, AddressOf ComboBox_SIC
+            combo.Items.Add(takenPlayers(index))
+            combo.Items.AddRange(availablePlayers.ToArray())
+            combo.SelectedIndex = 0
+            index += 1
         Next
 
     End Sub
@@ -241,27 +249,39 @@ Partial Class BracketForm
         Dim reader As SqlDataReader = query.ExecuteReader()
         dt.Load(reader)
         connection.Close()
-        availablePlayers.Add("Select")
+        'availablePlayers.Add("Select")
         For Each row As DataRow In dt.Rows
             availablePlayers.Add(row.Item("GamerTag"))
         Next
     End Sub
 
     Private Sub ComboBox_SIC(sender As Object, e As EventArgs)
-        If sender.SelectedItem = "Select" Then
-            If takenPlayers(1) <> "Select" Then
-                availablePlayers.Add(takenPlayers(1))
+        Dim index As Integer
+        Dim se As Integer
+        index = 0
+        For Each combo As ComboBox In cb
+            If combo Is sender Then
+                takenPlayersList.Remove(takenPlayers(index))
+                takenPlayersList.Add(sender.SelectedItem)
+                takenPlayers(index) = sender.SelectedItem
             End If
-            takenPlayers(1) = "Select"
-        Else
-            availablePlayers.Remove(sender.SelectedItem)
-            If takenPlayers(1) <> "Select" Then
-                availablePlayers.Add(takenPlayers(1))
+            index += 1
+        Next
+        index = 0
+        For Each combo As ComboBox In cb
+            If combo IsNot sender Then
+                combo.Items.Clear()
+                If takenPlayers(index) <> "(None Selected)" Then
+                    combo.Items.Add("(None Selected)")
+                    se = 1
+                Else
+                    se = 0
+                End If
+                combo.Items.Add(takenPlayers(index))
+                combo.Items.AddRange(availablePlayers.Except(takenPlayersList).ToArray())
+                combo.SelectedIndex = se
             End If
-            takenPlayers(1) = sender.SelectedItem
-        End If
-
-        ComboBox9.DataSource = Nothing
-        ComboBox9.DataSource = availablePlayers
+            index += 1
+        Next
     End Sub
 End Class
