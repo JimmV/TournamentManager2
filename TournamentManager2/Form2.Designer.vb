@@ -1,11 +1,12 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Drawing.Imaging
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class BracketForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +23,7 @@ Partial Class BracketForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         ComboBox1 = New ComboBox()
         ComboBox2 = New ComboBox()
@@ -39,12 +40,18 @@ Partial Class BracketForm
         ComboBox13 = New ComboBox()
         ComboBox14 = New ComboBox()
         ComboBox15 = New ComboBox()
+        Button1 = New Button()
+        Button2 = New Button()
+        Button3 = New Button()
+        Button4 = New Button()
+        Button5 = New Button()
+        Button6 = New Button()
         SuspendLayout()
         ' 
         ' ComboBox1
         ' 
         ComboBox1.FormattingEnabled = True
-        ComboBox1.Location = New Point(598, 212)
+        ComboBox1.Location = New Point(585, 213)
         ComboBox1.Name = "ComboBox1"
         ComboBox1.Size = New Size(151, 28)
         ComboBox1.TabIndex = 0
@@ -161,26 +168,87 @@ Partial Class BracketForm
         ComboBox15.Size = New Size(151, 28)
         ComboBox15.TabIndex = 14
         ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(585, 463)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(151, 29)
+        Button1.TabIndex = 15
+        Button1.Text = "Set Tier 1"
+        Button1.UseVisualStyleBackColor = True
+        ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(413, 463)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(151, 29)
+        Button2.TabIndex = 16
+        Button2.Text = "Set Tier 2"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' Button3
+        ' 
+        Button3.Location = New Point(221, 463)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(151, 29)
+        Button3.TabIndex = 17
+        Button3.Text = "Set Tier 3"
+        Button3.UseVisualStyleBackColor = True
+        ' 
+        ' Button4
+        ' 
+        Button4.Location = New Point(49, 463)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(151, 29)
+        Button4.TabIndex = 18
+        Button4.Text = "Set Tier 4"
+        Button4.UseVisualStyleBackColor = True
+        ' 
+        ' Button5
+        ' 
+        Button5.Location = New Point(49, 538)
+        Button5.Name = "Button5"
+        Button5.Size = New Size(323, 29)
+        Button5.TabIndex = 19
+        Button5.Text = "Exit WIthout Saving"
+        Button5.UseVisualStyleBackColor = True
+        ' 
+        ' Button6
+        ' 
+        Button6.Location = New Point(413, 538)
+        Button6.Name = "Button6"
+        Button6.Size = New Size(323, 29)
+        Button6.TabIndex = 20
+        Button6.Text = "Save Results and Exit"
+        Button6.UseVisualStyleBackColor = True
+        ' 
         ' BracketForm
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Controls.Add(ComboBox15)
-        Controls.Add(ComboBox14)
-        Controls.Add(ComboBox13)
-        Controls.Add(ComboBox12)
-        Controls.Add(ComboBox11)
-        Controls.Add(ComboBox10)
-        Controls.Add(ComboBox9)
-        Controls.Add(ComboBox8)
-        Controls.Add(ComboBox7)
-        Controls.Add(ComboBox6)
-        Controls.Add(ComboBox5)
-        Controls.Add(ComboBox4)
-        Controls.Add(ComboBox3)
-        Controls.Add(ComboBox2)
+        ClientSize = New Size(777, 599)
+        Controls.Add(Button1)
+        Controls.Add(Button2)
+        Controls.Add(Button3)
+        Controls.Add(Button4)
+        Controls.Add(Button5)
+        Controls.Add(Button6)
+
         Controls.Add(ComboBox1)
+        Controls.Add(ComboBox2)
+        Controls.Add(ComboBox3)
+        Controls.Add(ComboBox4)
+        Controls.Add(ComboBox5)
+        Controls.Add(ComboBox6)
+        Controls.Add(ComboBox7)
+        Controls.Add(ComboBox8)
+        Controls.Add(ComboBox9)
+        Controls.Add(ComboBox10)
+        Controls.Add(ComboBox11)
+        Controls.Add(ComboBox12)
+        Controls.Add(ComboBox13)
+        Controls.Add(ComboBox14)
+        Controls.Add(ComboBox15)
         Name = "BracketForm"
         Text = "Bracket"
         ResumeLayout(False)
@@ -202,7 +270,16 @@ Partial Class BracketForm
     Friend WithEvents ComboBox14 As ComboBox
     Friend WithEvents ComboBox15 As ComboBox
 
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
+
     Dim cb As New List(Of ComboBox)
+    Dim cbAll As New List(Of ComboBox)
+    Dim buttonsAll As New List(Of Button)
 
     Dim dt As New DataTable
     Dim availablePlayers As New List(Of String)
@@ -210,25 +287,61 @@ Partial Class BracketForm
     Dim takenPlayers(7) As String
     Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
-    Public Sub New()
+    Public Sub New(players As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         populateTable()
-        For ind As Integer = 0 To 7
+
+        For ind As Integer = 0 To players - 1
             takenPlayers(ind) = "(None Selected)"
         Next
 
-        cb.Add(ComboBox8)
-        cb.Add(ComboBox9)
-        cb.Add(ComboBox10)
-        cb.Add(ComboBox11)
-        cb.Add(ComboBox12)
-        cb.Add(ComboBox13)
-        cb.Add(ComboBox14)
-        cb.Add(ComboBox15)
+        For Each ComboBox As ComboBox In GetAll(Me, GetType(ComboBox))
+            cbAll.Add(ComboBox)
+        Next
 
+        For Each Button As Button In GetAll(Me, GetType(Button))
+            buttonsAll.Add(Button)
+        Next
+
+        'cbAll.Reverse()
+
+        'Add player comboBoxes to first round combo boxes
+        For ind As Integer = players - 1 To players * 2 - 2
+            cb.Add(cbAll.ElementAt(ind))
+        Next
+
+        'Disable all comboBoxes not in first round
+        For ind As Integer = 0 To 14
+            If ind < players - 1 Or ind > players * 2 - 2 Then
+                cbAll(ind).Enabled = False
+            End If
+        Next
+
+        'Disable all buttons not in first round and add handlers
+        For ind As Integer = 0 To 5
+            If ind < 4 Then
+                If ind <> Math.Log2(CDbl(players)) Then
+                    buttonsAll(ind).Enabled = False
+                End If
+                AddHandler buttonsAll(ind).Click, AddressOf Button_Click
+            End If
+        Next
+        AddHandler buttonsAll(4).Click, AddressOf Button_Click_WOS
+        AddHandler buttonsAll(5).Click, AddressOf Button_Click_WS
+
+        'cb.Add(ComboBox8)
+        'cb.Add(ComboBox9)
+        'cb.Add(ComboBox10)
+        'cb.Add(ComboBox11)
+        'cb.Add(ComboBox12)
+        'cb.Add(ComboBox13)
+        'cb.Add(ComboBox14)
+        'cb.Add(ComboBox15)
+
+        'Set combobox items and handlers
         Dim index As Integer
         index = 0
         For Each combo As ComboBox In cb
@@ -284,4 +397,63 @@ Partial Class BracketForm
             index += 1
         Next
     End Sub
+
+    Private Sub Button_Click(sender As Object, e As EventArgs)
+        Dim tier As Integer = buttonsAll.IndexOf(sender)
+        If tier = 0 Then
+            buttonsAll(tier).Enabled = False
+        Else
+            buttonsAll(tier).Enabled = False
+            buttonsAll(tier - 1).Enabled = True
+        End If
+        Update_Combos(tier)
+    End Sub
+
+    Private Sub Button_Click_WOS(sender As Object, e As EventArgs)
+        Me.Close()
+    End Sub
+
+    Private Sub Button_Click_WS(sender As Object, e As EventArgs)
+        Dim tier As Integer = buttonsAll.IndexOf(sender)
+        If tier = 0 Then
+            buttonsAll(tier).Enabled = False
+        Else
+            buttonsAll(tier).Enabled = False
+            buttonsAll(tier - 1).Enabled = True
+        End If
+        Update_Combos(tier)
+    End Sub
+
+    Private Sub Update_Combos(tier As Integer)
+        'Enable / diasble comboBoxes and set items
+        Dim playersFromLast As New List(Of String)
+        If tier = 0 Then
+            cbAll(0).Enabled = False
+        Else
+            For index As Integer = Math.Pow(2, CDbl(tier)) - 1 To Math.Pow(2, CDbl(tier)) - 1 + Math.Pow(2, CDbl(tier)) - 1
+                cbAll(index).Enabled = False
+                playersFromLast.Add(cbAll(index).SelectedItem)
+            Next
+            Dim tierM1 = tier - 1
+            Dim indexPrev = 0
+            For index As Integer = Math.Pow(2, CDbl(tierM1)) - 1 To Math.Pow(2, CDbl(tierM1)) - 1 + Math.Pow(2, CDbl(tierM1)) - 1
+                cbAll(index).Enabled = True
+                cbAll(index).Items.Add("(None Selected)")
+                For i As Integer = 0 To 1
+                    If Not cbAll(index).Items.Contains(playersFromLast(indexPrev + i)) Then
+                        cbAll(index).Items.Add(playersFromLast(indexPrev + i))
+                    End If
+                Next
+                cbAll(index).SelectedIndex = 0
+                indexPrev += 2
+            Next
+        End If
+    End Sub
+
+    'from https://stackoverflow.com/questions/47911946/get-all-combobox-names-vb-net
+    Private Function GetAll(Control As Control, Type As Type) As IEnumerable(Of Control)
+        Dim Controls = Control.Controls.Cast(Of Control)()
+        Return Controls.SelectMany(Function(x) GetAll(x, Type)).Concat(Controls).Where(Function(y) y.GetType = Type)
+    End Function
+
 End Class

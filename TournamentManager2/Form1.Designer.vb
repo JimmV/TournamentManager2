@@ -303,7 +303,7 @@ Partial Class Form1
     End Sub
 
     Private Sub BracketButton_Click(sender As Object, e As EventArgs) Handles BracketButton.Click
-        Dim bf As New BracketForm
+        Dim bf As New BracketForm(8)
         bf.Show()
     End Sub
 
