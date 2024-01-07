@@ -277,6 +277,8 @@ Partial Class BracketForm
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
 
+    Dim numPlayers As Integer
+
     Dim cb As New List(Of ComboBox)
     Dim cbAll As New List(Of ComboBox)
     Dim buttonsAll As New List(Of Button)
@@ -293,6 +295,8 @@ Partial Class BracketForm
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         populateTable()
+
+        numPlayers = players
 
         For ind As Integer = 0 To players - 1
             takenPlayers(ind) = "(None Selected)"
@@ -414,14 +418,46 @@ Partial Class BracketForm
     End Sub
 
     Private Sub Button_Click_WS(sender As Object, e As EventArgs)
-        Dim tier As Integer = buttonsAll.IndexOf(sender)
-        If tier = 0 Then
-            buttonsAll(tier).Enabled = False
-        Else
-            buttonsAll(tier).Enabled = False
-            buttonsAll(tier - 1).Enabled = True
-        End If
-        Update_Combos(tier)
+        'Complie number of wins and losses for each player and update database
+        Dim tier As Integer = Math.Log2(CDbl(numPlayers))
+        While tier > 0
+            Dim activePlayers As New List(Of String)
+            Dim winners As New List(Of String)
+            Dim losers As New List(Of String)
+            For index As Integer = Math.Pow(2, CDbl(tier)) - 1 To Math.Pow(2, CDbl(tier)) - 1 + Math.Pow(2, CDbl(tier)) - 1
+                activePlayers.Add(cbAll(index).SelectedItem)
+            Next
+            Dim tierM1 = tier - 1
+            Dim indexPrev = 0
+            For index As Integer = Math.Pow(2, CDbl(tierM1)) - 1 To Math.Pow(2, CDbl(tierM1)) - 1 + Math.Pow(2, CDbl(tierM1)) - 1
+                If cbAll(index).SelectedItem <> "(None Selected)" Then
+                    If Not activePlayers(indexPrev) = "(None Selected)" And Not activePlayers(indexPrev + 1) = "(None Selected)" Then
+                        winners.Add(cbAll(index).SelectedItem)
+                        If activePlayers(indexPrev) <> cbAll(index).SelectedItem Then
+                            losers.Add(activePlayers(indexPrev))
+                        Else
+                            losers.Add(activePlayers(indexPrev + 1))
+                        End If
+                    End If
+                End If
+                indexPrev += 2
+            Next
+            Dim connection As New SqlConnection(connectionString)
+            connection.Open()
+            For Each winner As String In winners
+                Dim query As String = "UPDATE PlayerDB SET Wins = Wins + 1 WHERE GamerTag = " & winner
+                Dim command As New SqlCommand(query, connection)
+                command.ExecuteNonQuery()
+            Next
+            For Each loser As String In losers
+                Dim query As String = "UPDATE PlayerDB SET Losses = Losses + 1 WHERE GamerTag = " & loser
+                Dim command As New SqlCommand(query, connection)
+                command.ExecuteNonQuery()
+            Next
+            connection.Close()
+            tier -= 1
+        End While
+        Me.Close()
     End Sub
 
     Private Sub Update_Combos(tier As Integer)

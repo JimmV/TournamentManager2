@@ -28,11 +28,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         ListBox1 = New ListBox()
-        NameTitle = New TextBox()
         NameBox = New TextBox()
-        GamerTitle = New TextBox()
-        WinsTitle = New TextBox()
-        LossesTitle = New TextBox()
         GamerBox = New TextBox()
         WinsBox = New TextBox()
         LossesBox = New TextBox()
@@ -42,6 +38,12 @@ Partial Class Form1
         MessageBox = New TextBox()
         BracketButton = New Button()
         Label1 = New System.Windows.Forms.Label()
+        Label2 = New System.Windows.Forms.Label()
+        NumPlayersBox = New ComboBox()
+        Label3 = New System.Windows.Forms.Label()
+        Label4 = New System.Windows.Forms.Label()
+        Label5 = New System.Windows.Forms.Label()
+        Label6 = New System.Windows.Forms.Label()
         SuspendLayout()
         ' 
         ' ListBox1
@@ -52,48 +54,12 @@ Partial Class Form1
         ListBox1.Size = New Size(323, 384)
         ListBox1.TabIndex = 0
         ' 
-        ' NameTitle
-        ' 
-        NameTitle.Location = New Point(386, 31)
-        NameTitle.Name = "NameTitle"
-        NameTitle.ReadOnly = True
-        NameTitle.Size = New Size(125, 27)
-        NameTitle.TabIndex = 1
-        NameTitle.Text = "Name"
-        ' 
         ' NameBox
         ' 
         NameBox.Location = New Point(540, 35)
         NameBox.Name = "NameBox"
         NameBox.Size = New Size(228, 27)
         NameBox.TabIndex = 2
-        ' 
-        ' GamerTitle
-        ' 
-        GamerTitle.Location = New Point(386, 84)
-        GamerTitle.Name = "GamerTitle"
-        GamerTitle.ReadOnly = True
-        GamerTitle.Size = New Size(125, 27)
-        GamerTitle.TabIndex = 4
-        GamerTitle.Text = "Gammer Tag"
-        ' 
-        ' WinsTitle
-        ' 
-        WinsTitle.Location = New Point(386, 139)
-        WinsTitle.Name = "WinsTitle"
-        WinsTitle.ReadOnly = True
-        WinsTitle.Size = New Size(125, 27)
-        WinsTitle.TabIndex = 5
-        WinsTitle.Text = "Wins"
-        ' 
-        ' LossesTitle
-        ' 
-        LossesTitle.Location = New Point(386, 195)
-        LossesTitle.Name = "LossesTitle"
-        LossesTitle.ReadOnly = True
-        LossesTitle.Size = New Size(125, 27)
-        LossesTitle.TabIndex = 6
-        LossesTitle.Text = "Losses"
         ' 
         ' GamerBox
         ' 
@@ -153,11 +119,11 @@ Partial Class Form1
         ' 
         ' BracketButton
         ' 
-        BracketButton.Location = New Point(504, 368)
+        BracketButton.Location = New Point(623, 388)
         BracketButton.Name = "BracketButton"
-        BracketButton.Size = New Size(94, 29)
+        BracketButton.Size = New Size(105, 27)
         BracketButton.TabIndex = 14
-        BracketButton.Text = "Bracket"
+        BracketButton.Text = "New Bracket"
         BracketButton.UseVisualStyleBackColor = True
         ' 
         ' Label1
@@ -169,11 +135,70 @@ Partial Class Form1
         Label1.TabIndex = 15
         Label1.Text = "Gamer Tags"
         ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(388, 395)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(92, 20)
+        Label2.TabIndex = 17
+        Label2.Text = "Bracket Size:"
+        ' 
+        ' NumPlayersBox
+        ' 
+        NumPlayersBox.FormattingEnabled = True
+        NumPlayersBox.Location = New Point(521, 388)
+        NumPlayersBox.Name = "NumPlayersBox"
+        NumPlayersBox.Size = New Size(58, 28)
+        NumPlayersBox.TabIndex = 18
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(442, 35)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(52, 20)
+        Label3.TabIndex = 19
+        Label3.Text = "Name:"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(411, 84)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(83, 20)
+        Label4.TabIndex = 20
+        Label4.Text = "Gamer Tag:"
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(450, 139)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(44, 20)
+        Label5.TabIndex = 21
+        Label5.Text = "Wins:"
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(442, 195)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(54, 20)
+        Label6.TabIndex = 22
+        Label6.Text = "Losses:"
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Label6)
+        Controls.Add(Label5)
+        Controls.Add(Label4)
+        Controls.Add(Label3)
+        Controls.Add(NumPlayersBox)
+        Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(BracketButton)
         Controls.Add(MessageBox)
@@ -183,11 +208,7 @@ Partial Class Form1
         Controls.Add(LossesBox)
         Controls.Add(WinsBox)
         Controls.Add(GamerBox)
-        Controls.Add(LossesTitle)
-        Controls.Add(WinsTitle)
-        Controls.Add(GamerTitle)
         Controls.Add(NameBox)
-        Controls.Add(NameTitle)
         Controls.Add(ListBox1)
         Name = "Form1"
         Text = "Tournament Manager"
@@ -197,11 +218,7 @@ Partial Class Form1
     End Sub
 
     Friend WithEvents ListBox1 As ListBox
-    Friend WithEvents NameTitle As TextBox
     Friend WithEvents NameBox As TextBox
-    Friend WithEvents GamerTitle As TextBox
-    Friend WithEvents WinsTitle As TextBox
-    Friend WithEvents LossesTitle As TextBox
     Friend WithEvents GamerBox As TextBox
     Friend WithEvents WinsBox As TextBox
     Friend WithEvents LossesBox As TextBox
@@ -211,6 +228,10 @@ Partial Class Form1
     Friend WithEvents MessageBox As TextBox
     Friend WithEvents BracketButton As Button
 
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents NumPlayersBox As ComboBox
+
     Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
     Public Sub New()
@@ -219,9 +240,12 @@ Partial Class Form1
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         populateLB()
+        NumPlayersBox.Items.AddRange({2, 4, 8})
+        NumPlayersBox.SelectedIndex = 0
     End Sub
 
     Private Sub populateLB()
+        AddHandler ListBox1.Click, AddressOf ListBox1_Click
         ListBox1.Items.Clear()
         Dim connection As New SqlConnection(connectionString)
         connection.Open()
@@ -239,7 +263,7 @@ Partial Class Form1
         ' something here to select without the button would be nice
     End Sub
 
-    Private Sub ListBox1_Click(sender As Object, e As EventArgs) Handles ListBox1.MouseClick
+    Private Sub ListBox1_Click(sender As Object, e As EventArgs)
         Dim selectedItem = ListBox1.SelectedItem
         NameBox.Text = selectedItem
         Dim connection As New SqlConnection(connectionString)
@@ -303,10 +327,13 @@ Partial Class Form1
     End Sub
 
     Private Sub BracketButton_Click(sender As Object, e As EventArgs) Handles BracketButton.Click
-        Dim bf As New BracketForm(8)
+        Dim bf As New BracketForm(NumPlayersBox.SelectedItem)
         bf.Show()
     End Sub
 
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
 
 End Class
