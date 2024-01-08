@@ -30,12 +30,9 @@ Partial Class Form1
         ListBox1 = New ListBox()
         NameBox = New TextBox()
         GamerBox = New TextBox()
-        WinsBox = New TextBox()
-        LossesBox = New TextBox()
         UpdateButton = New Button()
         DeleteButton = New Button()
         AddButton = New Button()
-        MessageBox = New TextBox()
         BracketButton = New Button()
         Label1 = New System.Windows.Forms.Label()
         Label2 = New System.Windows.Forms.Label()
@@ -44,6 +41,11 @@ Partial Class Form1
         Label4 = New System.Windows.Forms.Label()
         Label5 = New System.Windows.Forms.Label()
         Label6 = New System.Windows.Forms.Label()
+        WinsNumBox = New NumericUpDown()
+        LossesNumBox = New NumericUpDown()
+        MessageLabel = New System.Windows.Forms.Label()
+        CType(WinsNumBox, ComponentModel.ISupportInitialize).BeginInit()
+        CType(LossesNumBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' ListBox1
@@ -68,23 +70,9 @@ Partial Class Form1
         GamerBox.Size = New Size(228, 27)
         GamerBox.TabIndex = 7
         ' 
-        ' WinsBox
-        ' 
-        WinsBox.Location = New Point(540, 139)
-        WinsBox.Name = "WinsBox"
-        WinsBox.Size = New Size(228, 27)
-        WinsBox.TabIndex = 8
-        ' 
-        ' LossesBox
-        ' 
-        LossesBox.Location = New Point(540, 195)
-        LossesBox.Name = "LossesBox"
-        LossesBox.Size = New Size(228, 27)
-        LossesBox.TabIndex = 9
-        ' 
         ' UpdateButton
         ' 
-        UpdateButton.Location = New Point(386, 320)
+        UpdateButton.Location = New Point(402, 245)
         UpdateButton.Name = "UpdateButton"
         UpdateButton.Size = New Size(94, 29)
         UpdateButton.TabIndex = 10
@@ -93,7 +81,7 @@ Partial Class Form1
         ' 
         ' DeleteButton
         ' 
-        DeleteButton.Location = New Point(504, 320)
+        DeleteButton.Location = New Point(540, 245)
         DeleteButton.Name = "DeleteButton"
         DeleteButton.Size = New Size(94, 29)
         DeleteButton.TabIndex = 11
@@ -102,24 +90,16 @@ Partial Class Form1
         ' 
         ' AddButton
         ' 
-        AddButton.Location = New Point(634, 320)
+        AddButton.Location = New Point(674, 245)
         AddButton.Name = "AddButton"
         AddButton.Size = New Size(94, 29)
         AddButton.TabIndex = 12
         AddButton.Text = "Add"
         AddButton.UseVisualStyleBackColor = True
         ' 
-        ' MessageBox
-        ' 
-        MessageBox.Location = New Point(386, 260)
-        MessageBox.Name = "MessageBox"
-        MessageBox.ReadOnly = True
-        MessageBox.Size = New Size(382, 27)
-        MessageBox.TabIndex = 13
-        ' 
         ' BracketButton
         ' 
-        BracketButton.Location = New Point(623, 388)
+        BracketButton.Location = New Point(663, 302)
         BracketButton.Name = "BracketButton"
         BracketButton.Size = New Size(105, 27)
         BracketButton.TabIndex = 14
@@ -138,7 +118,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(388, 395)
+        Label2.Location = New Point(402, 302)
         Label2.Name = "Label2"
         Label2.Size = New Size(92, 20)
         Label2.TabIndex = 17
@@ -147,7 +127,7 @@ Partial Class Form1
         ' NumPlayersBox
         ' 
         NumPlayersBox.FormattingEnabled = True
-        NumPlayersBox.Location = New Point(521, 388)
+        NumPlayersBox.Location = New Point(559, 299)
         NumPlayersBox.Name = "NumPlayersBox"
         NumPlayersBox.Size = New Size(58, 28)
         NumPlayersBox.TabIndex = 18
@@ -188,11 +168,36 @@ Partial Class Form1
         Label6.TabIndex = 22
         Label6.Text = "Losses:"
         ' 
+        ' WinsNumBox
+        ' 
+        WinsNumBox.Location = New Point(540, 139)
+        WinsNumBox.Name = "WinsNumBox"
+        WinsNumBox.Size = New Size(150, 27)
+        WinsNumBox.TabIndex = 23
+        ' 
+        ' LossesNumBox
+        ' 
+        LossesNumBox.Location = New Point(540, 195)
+        LossesNumBox.Name = "LossesNumBox"
+        LossesNumBox.Size = New Size(150, 27)
+        LossesNumBox.TabIndex = 24
+        ' 
+        ' MessageLabel
+        ' 
+        MessageLabel.Location = New Point(368, 347)
+        MessageLabel.MaximumSize = New Size(400, 100)
+        MessageLabel.Name = "MessageLabel"
+        MessageLabel.Size = New Size(400, 80)
+        MessageLabel.TabIndex = 25
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(MessageLabel)
+        Controls.Add(LossesNumBox)
+        Controls.Add(WinsNumBox)
         Controls.Add(Label6)
         Controls.Add(Label5)
         Controls.Add(Label4)
@@ -201,17 +206,16 @@ Partial Class Form1
         Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(BracketButton)
-        Controls.Add(MessageBox)
         Controls.Add(AddButton)
         Controls.Add(DeleteButton)
         Controls.Add(UpdateButton)
-        Controls.Add(LossesBox)
-        Controls.Add(WinsBox)
         Controls.Add(GamerBox)
         Controls.Add(NameBox)
         Controls.Add(ListBox1)
         Name = "Form1"
         Text = "Tournament Manager"
+        CType(WinsNumBox, ComponentModel.ISupportInitialize).EndInit()
+        CType(LossesNumBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
@@ -220,17 +224,21 @@ Partial Class Form1
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents NameBox As TextBox
     Friend WithEvents GamerBox As TextBox
-    Friend WithEvents WinsBox As TextBox
-    Friend WithEvents LossesBox As TextBox
     Friend WithEvents UpdateButton As Button
     Friend WithEvents DeleteButton As Button
     Friend WithEvents AddButton As Button
-    Friend WithEvents MessageBox As TextBox
     Friend WithEvents BracketButton As Button
 
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents NumPlayersBox As ComboBox
+
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents WinsNumBox As NumericUpDown
+    Friend WithEvents LossesNumBox As NumericUpDown
 
     Dim connectionString As String = "Server=localhost\SQLEXPRESS;Database=JamesDB;Trusted_Connection=True;"
 
@@ -259,16 +267,12 @@ Partial Class Form1
         Next
     End Sub
 
-    Private Sub selectLB()
-        ' something here to select without the button would be nice
-    End Sub
-
     Private Sub ListBox1_Click(sender As Object, e As EventArgs)
         Dim selectedItem = ListBox1.SelectedItem
         NameBox.Text = selectedItem
         Dim connection As New SqlConnection(connectionString)
         connection.Open()
-        Dim query As String = "SELECT * from PlayerDB WHERE GamerTag = " + selectedItem
+        Dim query As String = "SELECT * from PlayerDB WHERE GamerTag = '" & selectedItem & "'"
         Dim command As New SqlCommand(query, connection)
         Dim reader = command.ExecuteReader
         Dim dt As New DataTable
@@ -278,52 +282,66 @@ Partial Class Form1
         For Each row As DataRow In dt.Rows
             NameBox.Text = row.Item("Playername")
             GamerBox.Text = row.Item("GamerTag")
-            WinsBox.Text = row.Item("Wins")
-            LossesBox.Text = row.Item("Losses")
+            WinsNumBox.Value = row.Item("Wins")
+            LossesNumBox.Value = row.Item("Losses")
         Next
     End Sub
 
     Private Sub UpdateButton_Click(sender As Object, e As EventArgs) Handles UpdateButton.Click
-        Dim selectedItem = ListBox1.SelectedItem
+        If GamerBox.Text <> "" And NameBox.Text <> "" Then
+            Dim connection As New SqlConnection(connectionString)
+            connection.Open()
+            Dim query As String = "UPDATE PlayerDB SET "
+            query &= "Playername = '" & NameBox.Text
+            query &= "', GamerTag = '" & GamerBox.Text
+            query &= "', Wins = " & WinsNumBox.Value
+            query &= ", Losses = " & LossesNumBox.Value
+            query &= " WHERE GamerTag = '" & GamerBox.Text & "'"
+            Dim command As New SqlCommand(query, connection)
+            command.ExecuteNonQuery()
+            connection.Close()
+            populateLB()
+        Else
+            MessageLabel.Text = "The Name and Gamer Tag must both be non-empty"
+        End If
 
-        Dim connection As New SqlConnection(connectionString)
-        connection.Open()
-        Dim query As String = "UPDATE PlayerDB SET "
-        query &= "Playername = '" & NameBox.Text
-        query &= "', GamerTag = '" & GamerBox.Text
-        query &= "', Wins = " & CInt(WinsBox.Text)
-        query &= ", Losses = " & CInt(LossesBox.Text)
-        query &= " WHERE GamerTag = " & selectedItem
-        Dim command As New SqlCommand(query, connection)
-        command.ExecuteNonQuery()
-        connection.Close()
-        populateLB()
     End Sub
 
     Private Sub DeleteButton_Click(sender As Object, e As EventArgs) Handles DeleteButton.Click
-        Dim selectedItem = ListBox1.SelectedItem
+        If GamerBox.Text <> "" Then
+            Dim connection As New SqlConnection(connectionString)
+            connection.Open()
+            Dim query As String = "DELETE from PlayerDB WHERE GamerTag = '" & ListBox1.SelectedItem & "'"
+            Dim command As New SqlCommand(query, connection)
+            command.ExecuteNonQuery()
+            connection.Close()
+            populateLB()
+        Else
+            MessageLabel.Text = "The Gamer Tag must be non-empty"
+        End If
 
-        Dim connection As New SqlConnection(connectionString)
-        connection.Open()
-        Dim query As String = "DELETE from PlayerDB WHERE GamerTag = " & selectedItem
-        Dim command As New SqlCommand(query, connection)
-        command.ExecuteNonQuery()
-        connection.Close()
-        populateLB()
     End Sub
 
     Private Sub AddButton_Click(sender As Object, e As EventArgs) Handles AddButton.Click
-        Dim connection As New SqlConnection(connectionString)
-        connection.Open()
-        Try
-            Dim query As String = "INSERT INTO PlayerDB VALUES ('" & NameBox.Text & "', '" & GamerBox.Text & "', " & CInt(WinsBox.Text) & ", " & CInt(LossesBox.Text) & ")"
-            Dim command As New SqlCommand(query, connection)
-            command.ExecuteNonQuery()
-        Catch ex As Exception
-            MessageBox.Text = ex.Message
-        End Try
-        connection.Close()
-        populateLB()
+        If NameBox.Text <> "" And GamerBox.Text <> "" Then
+            Dim connection As New SqlConnection(connectionString)
+            connection.Open()
+            Try
+                Dim query As String = "INSERT INTO PlayerDB VALUES ('" & NameBox.Text & "', '" & GamerBox.Text & "', " & WinsNumBox.Value & ", " & LossesNumBox.Value & ")"
+                Dim command As New SqlCommand(query, connection)
+                command.ExecuteNonQuery()
+            Catch ex As Exception
+                Dim message As String = ""
+                message &= "Cannot insert duplicate: "
+                message &= ex.Message.Substring(ex.Message.IndexOf("("))
+                MessageLabel.Text = message
+            End Try
+            connection.Close()
+            populateLB()
+        Else
+            MessageLabel.Text = "The Name and Gamer Tag must both be non-empty"
+        End If
+
     End Sub
 
     Private Sub BracketButton_Click(sender As Object, e As EventArgs) Handles BracketButton.Click
@@ -331,9 +349,6 @@ Partial Class Form1
         bf.Show()
     End Sub
 
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents MessageLabel As System.Windows.Forms.Label
 
 End Class
