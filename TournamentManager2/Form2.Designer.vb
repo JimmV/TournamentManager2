@@ -46,6 +46,7 @@ Partial Class BracketForm
         Button4 = New Button()
         Button5 = New Button()
         Button6 = New Button()
+        HelperButton = New Button()
         SuspendLayout()
         ' 
         ' ComboBox1
@@ -222,6 +223,15 @@ Partial Class BracketForm
         Button6.Text = "Save Results and Exit"
         Button6.UseVisualStyleBackColor = True
         ' 
+        ' HelperButton
+        ' 
+        HelperButton.Location = New Point(707, 23)
+        HelperButton.Name = "HelperButton"
+        HelperButton.Size = New Size(29, 29)
+        HelperButton.TabIndex = 21
+        HelperButton.Text = "?"
+        HelperButton.UseVisualStyleBackColor = True
+        ' 
         ' BracketForm
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
@@ -233,7 +243,7 @@ Partial Class BracketForm
         Controls.Add(Button4)
         Controls.Add(Button5)
         Controls.Add(Button6)
-
+        Controls.Add(HelperButton)
         Controls.Add(ComboBox1)
         Controls.Add(ComboBox2)
         Controls.Add(ComboBox3)
@@ -276,6 +286,8 @@ Partial Class BracketForm
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
+
+    Friend WithEvents HelperButton As Button
 
     Dim numPlayers As Integer
 
@@ -335,6 +347,7 @@ Partial Class BracketForm
         Next
         AddHandler buttonsAll(4).Click, AddressOf Button_Click_WOS
         AddHandler buttonsAll(5).Click, AddressOf Button_Click_WS
+        AddHandler HelperButton.Click, AddressOf HelperButton_Click
 
         'cb.Add(ComboBox8)
         'cb.Add(ComboBox9)
@@ -445,12 +458,12 @@ Partial Class BracketForm
             Dim connection As New SqlConnection(connectionString)
             connection.Open()
             For Each winner As String In winners
-                Dim query As String = "UPDATE PlayerDB SET Wins = Wins + 1 WHERE GamerTag = " & winner
+                Dim query As String = "UPDATE PlayerDB SET Wins = Wins + 1 WHERE GamerTag = '" & winner & "'"
                 Dim command As New SqlCommand(query, connection)
                 command.ExecuteNonQuery()
             Next
             For Each loser As String In losers
-                Dim query As String = "UPDATE PlayerDB SET Losses = Losses + 1 WHERE GamerTag = " & loser
+                Dim query As String = "UPDATE PlayerDB SET Losses = Losses + 1 WHERE GamerTag = '" & loser & "'"
                 Dim command As New SqlCommand(query, connection)
                 command.ExecuteNonQuery()
             Next
@@ -484,6 +497,11 @@ Partial Class BracketForm
                 indexPrev += 2
             Next
         End If
+    End Sub
+
+    Private Sub HelperButton_Click()
+        Dim hf As New Form3()
+        hf.Show()
     End Sub
 
     'from https://stackoverflow.com/questions/47911946/get-all-combobox-names-vb-net
